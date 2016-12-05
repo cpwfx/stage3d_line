@@ -44,12 +44,11 @@ public class Interpolation
 
         var id:Vector.<int> = findMoreThen(f12, 0.00000001 * max(f12));
         var b:Vector.<Number> = range(m1, 1, n + 2);
-        var bid:Vector.<Number> = vect(b, id);
-        bid = equal(bid, divide(plus(multiply(vect(f1, id), vect(m1, plusScalar(id, 1))),
-                                     multiply(vect(f2, id), vect(m1, plusScalar(id, 2)))), vect(f12, id)));
+        b = equal(b, divide(plus(multiply(vect(f1, id), vect(m1, plusScalar(id, 1))),
+                                 multiply(vect(f2, id), vect(m1, plusScalar(id, 2)))), vect(f12, id)));
         var c:Vector.<Number> = divide(
-                minus(minus(multiplyByScalar(m, 3), multiplyByScalar(range(bid, 0, n), 2)), range(bid, 1, n + 1)), dx);
-        var d:Vector.<Number> = divide(minus(plus(range(bid, 0, n), range(bid, 1, n + 1)), multiplyByScalar(m, 2)),
+                minus(minus(multiplyByScalar(m, 3), multiplyByScalar(range(b, 0, n), 2)), range(b, 1, n + 1)), dx);
+        var d:Vector.<Number> = divide(minus(plus(range(b, 0, n), range(b, 1, n + 1)), multiplyByScalar(m, 2)),
                                        sqr(dx));
 
         var bin:Vector.<int> = histc(xi, x);
@@ -60,7 +59,7 @@ public class Interpolation
 
         var wj:Vector.<Number> = minus(xi, vect(x, bb));
         var yi:Vector.<Number> = plus(
-                multiply(plus(multiply(plus(multiply(wj, vect(d, bb)), vect(c, bb)), wj), vect(bid, bb)), wj),
+                multiply(plus(multiply(plus(multiply(wj, vect(d, bb)), vect(c, bb)), wj), vect(b, bb)), wj),
                 vect(y, bb));
 
         return yi;
