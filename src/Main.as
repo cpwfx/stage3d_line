@@ -16,7 +16,7 @@ import flash.events.Event;
 import flash.geom.Matrix3D;
 import flash.geom.Point;
 
-[SWF(width="800",height="600")]
+[SWF(width="800", height="600")]
 public class Main extends Sprite
 {
     [Embed(source="../imgs/wood.png")]
@@ -107,14 +107,25 @@ public class Main extends Sprite
     {
         var A:Point = _coordConv.getPoint(new Point(0, 100));
         var B:Point = _coordConv.getPoint(new Point(700, 100));
+        var C:Point = _coordConv.getPoint(new Point(740, 200));
+
         var angle:Number = Math.atan2(B.y - A.y, B.x - A.x);
         var thickness:Number = 20 / stage.stageHeight;
-        var vertices:Vector.<Number> = Quad.getVertecies(A, B, thickness);
+
+        var segment1:Vector.<Number> = Quad.getVertecies(A, B, thickness);
+        var segment2:Vector.<Number> = Quad.getVertecies(B, C, thickness);
+
+        var vertices:Vector.<Number> = segment1.concat(segment2);
+        var n:int = segment2.length;
+        for (var i:int = 0; i < n; i++)
+        {
+            segment1.push(segment2[ i ]);
+        }
 
         // Create VertexBuffer3D. 4 vertices, of 4 Numbers each
-        vertexbuffer = context3D.createVertexBuffer(4, 4);
+        vertexbuffer = context3D.createVertexBuffer(8, 4);
         // Upload VertexBuffer3D to GPU. Offset 0, 4 vertices
-        vertexbuffer.uploadFromVector(vertices, 0, 4);
+        vertexbuffer.uploadFromVector(segment1, 0, 8);
     }
 
     protected function onRender(e:Event):void
