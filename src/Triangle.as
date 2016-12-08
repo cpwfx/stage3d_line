@@ -42,19 +42,39 @@ public class Triangle extends Sprite
 
         var vertices:Vector.<Number> = Vector.<Number>([
                                                            -0.3, -0.3, 0, 1, // x, y, z, u, v
-                                                           -0.3, 0.3, 0, 0,
-                                                           0.3, 0.3, 1, 0,
-                                                           0.3, -0.3, 1, 1
+                                                           -0.3,  0.3, 0, 0,
+                                                            0.3,  0.3, 1, 0,
+                                                            0.3, -0.3, 1, 1
                                                        ]);
 
-        vertexbuffer = context3D.createVertexBuffer(4, 4);
-        vertexbuffer.uploadFromVector(vertices, 0, 4);
+        var vertices1:Vector.<Number> = Vector.<Number>([
+                                                            -0.3, -0.3, 0, 1, // x, y, z, u, v
+                                                            -0.3,  0.3, 0, 0,
+                                                            0.3,  0.3, 1, 0,
+                                                            0.3, -0.3, 1, 1,
+                                                           -0.6, -0.6, 0, 1, // x, y, z, u, v
+                                                           -0.6,  0.6, 0, 0,
+                                                            0.6,  0.6, 1, 0,
+                                                            0.6, -0.6, 1, 1
+                                                       ]);
+
+        vertexbuffer = context3D.createVertexBuffer(vertices1.length / 4, 4);
+        vertexbuffer.uploadFromVector(vertices1, 0, vertices1.length / 4);
 
         var indices:Vector.<uint> = Vector.<uint>([ 0, 1, 2, 0, 2, 3 ]);
-        indexbuffer = context3D.createIndexBuffer(6);
-        indexbuffer.uploadFromVector(indices, 0, 6);
+
+        var resultIndices:Vector.<uint> = indices.concat();
+        var n:int = indices.length;
+        for (var i:int = 0; i < n; i++)
+        {
+              resultIndices.push(indices[i] + 4);
+        }
+
+        indexbuffer = context3D.createIndexBuffer(resultIndices.length);
+        indexbuffer.uploadFromVector(resultIndices, 0, resultIndices.length);
 
         var bitmap:Bitmap = new TextureBitmap();
+        bitmap.alpha = 0.3;
         texture = context3D.createTexture(bitmap.bitmapData.width, bitmap.bitmapData.height,
                                           Context3DTextureFormat.BGRA, false);
         texture.uploadFromBitmapData(bitmap.bitmapData);

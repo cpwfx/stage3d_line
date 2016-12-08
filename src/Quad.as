@@ -17,8 +17,8 @@ public class Quad
         var D:Point = b.subtract(perp);
 
         _vertices = new <Number>[ A.x, A.y, 0, 0,
-            B.x, B.y, 1, 0,
-            C.x, C.y, 0, 1,
+            B.x, B.y, 0, 1,
+            C.x, C.y, 1, 0,
             D.x, D.y, 1, 1 ];
 
         return _vertices;
