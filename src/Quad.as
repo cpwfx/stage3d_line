@@ -4,9 +4,9 @@ import flash.geom.Point;
 
 public class Quad
 {
-    private static var _verticies:Vector.<Number>;
+    private static var _vertices:Vector.<Number>;
 
-    public static function getVertecies(a:Point, b:Point, thickness:Number):Vector.<Number>
+    public static function getVertices(a:Point, b:Point, thickness:Number):Vector.<Number>
     {
         var dir:Point = b.subtract(a);
         var perp:Point = new Point(-dir.y, dir.x);
@@ -16,12 +16,12 @@ public class Quad
         var C:Point = b.add(perp);
         var D:Point = b.subtract(perp);
 
-        _verticies = new <Number>[ A.x, A.y, 0, 0,
+        _vertices = new <Number>[ A.x, A.y, 0, 0,
             B.x, B.y, 1, 0,
             C.x, C.y, 0, 1,
             D.x, D.y, 1, 1 ];
 
-        return _verticies;
+        return _vertices;
     }
 }
 }
