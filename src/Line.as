@@ -35,10 +35,28 @@ public class Line
 
         var vertices:Vector.<Number> = new Vector.<Number>();
 
+        var C:Point;
+        var D:Point;
+
         var n:int = points.length;
+        var newLen:int;
         for (var i:int = 0; i < n - 1; i++)
         {
-            vertices = vertices.concat(Quad.getVertices(coordsConverter.getPoint(points[ i ]), coordsConverter.getPoint(points[ i + 1 ]), 0.2));
+            if (!C && !D)
+            {
+                vertices = vertices.concat(Quad.getVertices(coordsConverter.getPoint(points[ i ]),
+                                                            coordsConverter.getPoint(points[ i + 1 ]),
+                                                            0.2));
+            }
+            else
+            {
+                vertices = vertices.concat(Quad.getCDVertices(coordsConverter.getPoint(points[ i ]),
+                                                              coordsConverter.getPoint(points[ i + 1 ]), C, D, 0.2));
+            }
+
+            newLen = vertices.length;
+            C = new Point(vertices[ newLen - 8 ], vertices[ newLen - 7 ]);
+            D = new Point(vertices[ newLen - 4 ], vertices[ newLen - 3 ]);
         }
 
         var numPerVertex:int = 4;

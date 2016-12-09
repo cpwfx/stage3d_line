@@ -23,5 +23,21 @@ public class Quad
 
         return _vertices;
     }
+
+    public static function getCDVertices(a:Point, b:Point, prevC:Point, prevD:Point, thickness:Number):Vector.<Number>
+    {
+        var dir:Point = b.subtract(a);
+        var perp:Point = new Point(-dir.y, dir.x);
+        perp.normalize(thickness);
+        var C:Point = b.add(perp);
+        var D:Point = b.subtract(perp);
+
+        _vertices = new <Number>[ prevC.x, prevC.y, 0, 0,
+            prevD.x, prevD.y, 0, 1,
+            C.x, C.y, 1, 0,
+            D.x, D.y, 1, 1 ];
+
+        return _vertices;
+    }
 }
 }
